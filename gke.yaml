@@ -1,0 +1,37 @@
+---
+# Creating Namespace
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: gke-prod
+
+---
+# Creating deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gke-devops-deployment
+  labels:
+    name: gke-devops
+  namespace: gke-prod
+spec:
+  template:
+    metadata:
+      name: gke-devops
+      labels:
+        env: prod
+        name: gke-devops
+    spec:
+      containers:
+        - image: us-east4-docker.pkg.dev/kodekloud-gcp-training-385911/my-image-repo/python-flask:latest
+          name: gke-devops
+          ports:
+          - containerPort: 5000
+          env:
+            - name: PORT
+              value: "5000"
+  replicas: 1
+  selector:
+    matchLabels:
+      env: prod
+      name: gke-devops
