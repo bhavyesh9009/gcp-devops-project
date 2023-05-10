@@ -1,0 +1,15 @@
+steps:
+# Build the container image
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'us-east4-docker.pkg.dev/${PROJECT_ID}/my-image-repo-dev/python-flask-dev', '.']
+# Push container image
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'us-east4-docker.pkg.dev/${PROJECT_ID}/my-image-repo-dev/python-flask-dev']
+# Deploy container image to GKE
+- name: 'gcr.io/cloud-builders/gke-deploy'
+  args:
+  - run
+  - --filename=gke.yaml
+  - --image=us-east4-docker.pkg.dev/kodekloud-gcp-training-385911/my-image-repo-dev/python-flask-dev:latest
+  - --location=us-central1-c
+  - --cluster=gke-gcp-project
