@@ -32,6 +32,6 @@ spec:
               value: "5000"
   replicas: 1
   selector:
-    matchlabels:
+    matchLabels:
       env: dev
       name: gke-devops
