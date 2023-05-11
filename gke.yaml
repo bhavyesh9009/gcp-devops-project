@@ -23,7 +23,7 @@ spec:
         name: gke-devops
     spec:
       containers:
-        - image: us-east4-docker.pkg.dev/kodekloud-gcp-training-385911/my-image-repo/python-flask:latest
+        - image: us-east4-docker.pkg.dev/kodekloud-gcp-training-385911/python-flask/prod-app:latest
           name: gke-devops
           ports:
           - containerPort: 5000
@@ -35,3 +35,20 @@ spec:
     matchLabels:
       env: prod
       name: gke-devops
+
+---
+# Creating Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: gke-service
+  namespace: gke-prod
+spec:
+  type: LoadBalancer
+  selector:
+    env: prod
+    name: gke-devops
+  ports:
+   - port: 80
+     protocol: TCP
+     targetPort: 5000
