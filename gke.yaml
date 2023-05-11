@@ -23,7 +23,7 @@ spec:
         name: gke-devops
     spec:
       containers:
-        - image: us-east4-docker.pkg.dev/kodekloud-gcp-training-385911/python-flask:latest
+        - image: us-east4-docker.pkg.dev/kodekloud-gcp-training-385911/python-flask/prod-app:latest
           name: gke-devops
           ports:
           - containerPort: 5000
